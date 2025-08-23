@@ -40,14 +40,17 @@ def main():
     ball = Ball(initial_position=Vector2(400, 225),
                 initial_vector=Vector2(3, -3),
                 radius=10)
+    
     dead_zone = DeadZone(position=Vector2(0, screen_height-5), width=screen_width, height=5)
     player = Player(position=Vector2(screen_width/2 - 50, screen_height-30), width=80, height=20)
     level: List[Boulder] = configure_level()
-    physics_system = BruteForcePhysicsSystem(level, Vector2(screen_width, screen_height))   
+    physics_system = BruteForcePhysicsSystem(level,
+                                             dead_zone,
+                                             Vector2(screen_width, screen_height))   
 
     # Main game loop
     while not rl.window_should_close():
-        
+        # --------------
         # Read keyboard
         # ----------------------------------------------------------------------------------
         if rl.is_key_down(rl.KeyboardKey.KEY_RIGHT):
@@ -62,14 +65,18 @@ def main():
         collision = physics_system.detect_collision(ball, player)
         if collision:
             ball.on_collision(collision.collision_vector)
-            if (collision.second_entity and collision.second_entity.is_breakable()):
-                level.remove(collision.second_entity)
-                physics_system.remove_entity(collision.second_entity)
+            if (collision.second_entity):
+                if (collision.second_entity.is_breakable()):
+                    level.remove(collision.second_entity)
+                    physics_system.remove_entity(collision.second_entity)
+
+                if (isinstance(collision.second_entity, DeadZone)):
+                    lifes -= 1
+            
 
         # Draw
         # ----------------------------------------------------------------------------------
         rl.begin_drawing()
-
         rl.clear_background(rl.RAYWHITE)
         ball.draw()
         player.draw()
@@ -78,8 +85,6 @@ def main():
             boulder.draw()
             
         rl.draw_text(f"VIDAS: {lifes}", 10, 40, 20, rl.GRAY)
-        rl.draw_text(f"PUNTUACION", 600, 40, 20, rl.GRAY)
-
         rl.end_drawing()
         # ----------------------------------------------------------------------------------
 

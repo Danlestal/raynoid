@@ -1,6 +1,7 @@
 from typing import List, Optional
 from domain.ball import Ball
 from domain.boulder import Boulder
+from domain.deadzone import DeadZone
 from domain.player import Player
 from pyray import Vector2
 
@@ -14,8 +15,10 @@ class BruteForcePhysicsSystem:
     
     def __init__(self,
                  level:List[Boulder],
+                 deadzone: DeadZone,
                  game_boundaries:Vector2):
         self.game_boundaries = game_boundaries
+        self.deadzone = deadzone
         self.level = level
     
     def _check_game_boundaries(self, ball: Ball) -> Optional[Collision]:
@@ -25,7 +28,9 @@ class BruteForcePhysicsSystem:
         if ball.position.y - ball.radius <= 0 or ball.position.y + ball.radius >= self.game_boundaries.y:
             return Collision(ball, None, Vector2(1,-1)) #Maybe later we add a wall entity.
 
-    def _check_player_collision(self, ball: Ball, player: Player) -> Optional[Collision]:
+    def _check_player_collision(self,
+                                ball: Ball,
+                                player: Player) -> Optional[Collision]:
         if (
         (ball.position.x + ball.radius >= player.position.x) and 
         (ball.position.x - ball.radius <= player.position.x + player.width)):
@@ -59,4 +64,9 @@ class BruteForcePhysicsSystem:
             ):
                 if (ball.position.y + ball.radius >= boulder.position.y) and (ball.position.y - ball.radius <= boulder.position.y + boulder.height):
                     return Collision(ball, boulder, Vector2(1,-1))
+                
+        # Check deadzone
+        if ball.position.y + ball.radius >= self.deadzone.position.y:
+            return Collision(ball, self.deadzone, Vector2(1,-1)) #Maybe later we add a wall entity.
+        
         return None
