@@ -22,7 +22,7 @@ class I2DEntity:
         return False
     
     
-        #Returns the normal collision vector
+    #Returns the normal collision vector
     def get_collission_vector(self, other: "I2DEntity") -> Vector2:
         surface_distances = {
             Vector2(-1, 1): self.get_left_boundary() - other.get_right_boundary(),
