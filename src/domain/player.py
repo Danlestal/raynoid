@@ -2,8 +2,9 @@ import pyray as rl
 from pyray import Vector2
 
 from domain.ibreakable import IBreakable
+from domain.I_2d_entity import I2DEntity
 
-class Player(IBreakable):
+class Player(IBreakable, I2DEntity):
     def __init__(self, position, width, height):
         self.position = position
         self.width = width
@@ -26,3 +27,15 @@ class Player(IBreakable):
         
     def is_breakable(self) -> bool:
         return False
+    
+    def get_top_boundary(self):
+        return  self.position.y
+        
+    def get_down_boundary(self):
+        return  self.position.y + self.height
+    
+    def get_left_boundary(self):
+        return  self.position.x
+    
+    def get_right_boundary(self):
+        return self.position.x + self.width
