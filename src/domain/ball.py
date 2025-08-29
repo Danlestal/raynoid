@@ -4,8 +4,11 @@ import pyray as rl
 
 from domain.ibreakable import IBreakable
 from domain.I_2d_entity import I2DEntity
+from domain.moving_entity import IMovingEntity
 
-class Ball(IBreakable, I2DEntity):
+
+
+class Ball(IBreakable, I2DEntity, IMovingEntity):
     def __init__(self, initial_position: Vector2, initial_vector: Vector2, radius: float):
         self.position = initial_position
         self.vector = initial_vector

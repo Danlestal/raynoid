@@ -6,11 +6,11 @@ from typing import List
 from domain.ball import Ball
 from domain.boulder import Boulder
 from domain.deadzone import DeadZone
+from domain.level import Level
 from domain.player import Player
 from systems.physics import BruteForcePhysicsSystem
 
-def configure_level() -> List[Boulder]:
-    level: List[Boulder] = []
+def configure_level_boulders(level: Level) -> List[Boulder]:
     start_x = 50
     start_y = 50
     width = 60
@@ -23,7 +23,7 @@ def configure_level() -> List[Boulder]:
         for col in range(cols):
             position = Vector2(start_x + col * (width + padding), start_y + row * (height + padding))
             boulder = Boulder(position=position, width=width, height=height)
-            level.append(boulder)
+            level.add_entity(boulder)
 
     return level
 
@@ -37,15 +37,20 @@ def main():
     rl.set_target_fps(60)  # Set our game to run at 60 frames-per-second
 
     
+    game_level = Level()
     ball = Ball(initial_position=Vector2(400, 225),
                 initial_vector=Vector2(3, -3),
                 radius=10)
+    game_level.add_entity(ball)
     
     dead_zone = DeadZone(position=Vector2(0, screen_height-5), width=screen_width, height=5)
+    game_level.add_entity(dead_zone)
+    
     player = Player(position=Vector2(screen_width/2 - 50, screen_height-30), width=80, height=20)
-    level: List[Boulder] = configure_level()
+    game_level.add_entity(player)
+    
+    level: List[Boulder] = configure_level_boulders(game_level)
     physics_system = BruteForcePhysicsSystem(level,
-                                             dead_zone,
                                              Vector2(screen_width, screen_height))   
 
     # Main game loop
@@ -67,8 +72,7 @@ def main():
             ball.on_collision(collision.collision_vector)
             if (collision.second_entity):
                 if (collision.second_entity.is_breakable()):
-                    level.remove(collision.second_entity)
-                    physics_system.remove_entity(collision.second_entity)
+                    game_level.remove_entity(collision.second_entity)
 
                 if (isinstance(collision.second_entity, DeadZone)):
                     lifes -= 1
@@ -78,11 +82,7 @@ def main():
         # ----------------------------------------------------------------------------------
         rl.begin_drawing()
         rl.clear_background(rl.RAYWHITE)
-        ball.draw()
-        player.draw()
-        dead_zone.draw()
-        for boulder in level:
-            boulder.draw()
+        game_level.draw()
             
         rl.draw_text(f"VIDAS: {lifes}", 10, 40, 20, rl.GRAY)
         rl.end_drawing()

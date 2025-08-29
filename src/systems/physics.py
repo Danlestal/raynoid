@@ -2,6 +2,7 @@ from typing import List, Optional
 from domain.ball import Ball
 from domain.boulder import Boulder
 from pyray import Vector2
+from domain.level import Level
 from domain.player import Player
 from pyray import Vector2
 
@@ -19,11 +20,9 @@ class Collision:
 class BruteForcePhysicsSystem:
     
     def __init__(self,
-                 level:List[I2DEntity],
-                 deadzone: I2DEntity,
+                 level:Level,
                  game_boundaries:Vector2):
         self.game_boundaries = game_boundaries
-        self.deadzone = deadzone
         self.level = level
     
     def _check_game_boundaries(self, ball: Ball) -> Optional[Collision]:
@@ -40,11 +39,6 @@ class BruteForcePhysicsSystem:
             return Collision(ball, player, Vector2(1,-1))
         return None
 
-    def remove_entity(self, entity):
-        if isinstance(entity, Boulder):
-            if entity in self.level:
-                self.level.remove(entity)
-
     def detect_collision(self,
                          ball: Ball,
                          player:Player ) -> Optional[Collision]:
@@ -59,12 +53,12 @@ class BruteForcePhysicsSystem:
             return collision_detected
 
         # Check boulder collision
-        for boulder in self.level:
+        for boulder in filter(lambda x: isinstance(x,Boulder), self.level.get_entities()):
             if ball.check_collision(boulder):
                 return Collision(ball, boulder, ball.get_collission_vector(boulder))     
                 
         # Check deadzone
-        if ball.get_down_boundary() >= self.deadzone.position.y:
-            return Collision(ball, self.deadzone, Vector2(1,-1))
+        # if ball.get_down_boundary() >= self.deadzone.position.y:
+        #     return Collision(ball, self.deadzone, Vector2(1,-1))
         
         return None
