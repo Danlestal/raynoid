@@ -58,8 +58,6 @@ class BruteForcePhysicsSystem(ISystem):
                         self.level.lifes -= 1
             
             
-            
-        
     def _detect_collision(self,
                          ball: Ball,
                          player:Player ) -> Optional[Collision]:

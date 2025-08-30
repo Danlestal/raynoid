@@ -6,7 +6,7 @@ from typing import List
 from domain.ball import Ball
 from domain.boulder import Boulder
 from domain.deadzone import DeadZone
-from domain.level import Level
+from domain.level import GameLevel, Level
 from domain.player import Player
 from systems.physics import BruteForcePhysicsSystem
 
@@ -37,7 +37,7 @@ def main():
     rl.set_target_fps(60)  # Set our game to run at 60 frames-per-second
 
     
-    game_level = Level()
+    game_level = GameLevel()
     ball = Ball(initial_position=Vector2(400, 225),
                 initial_vector=Vector2(3, -3),
                 radius=10)
@@ -65,8 +65,7 @@ def main():
         
 
         # Update game logic
-        ball.update_position()
-        player.update_position()
+        game_level.update_logic()
         physics_system.update()
         # Draw
         # ----------------------------------------------------------------------------------

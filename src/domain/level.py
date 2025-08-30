@@ -1,14 +1,24 @@
-from typing import List
+from typing import List, Optional, Protocol
 import pyray as rl
 from domain.I_2d_entity import I2DEntity
 from domain.ball import Ball
+from domain.boulder import Boulder
 from domain.deadzone import DeadZone
 from domain.moving_entity import IMovingEntity
 from domain.player import Player
 from systems.system import ISystem
 
 
-class Level:
+class Level(Protocol):
+    def draw(self):
+        pass
+
+    def next_level(self) ->  Optional["Level"]:
+        pass
+        
+        
+
+class GameLevel(Level):
     entities: List[I2DEntity]
     balls: List[Ball]
     player: Player
@@ -49,3 +59,9 @@ class Level:
         for entity in self.get_entities():
             entity.draw() 
         rl.draw_text(f"VIDAS: {self.lifes}", 10, 40, 20, rl.GRAY)
+        
+
+    def update_logic(self):
+        self.player.update_position()
+        for ball in self.balls:
+            ball.update_position()
