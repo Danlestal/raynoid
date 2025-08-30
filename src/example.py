@@ -67,24 +67,12 @@ def main():
         # Update game logic
         ball.update_position()
         player.update_position()
-        collision = physics_system.detect_collision(ball, player)
-        if collision:
-            ball.on_collision(collision.collision_vector)
-            if (collision.second_entity):
-                if (collision.second_entity.is_breakable()):
-                    game_level.remove_entity(collision.second_entity)
-
-                if (isinstance(collision.second_entity, DeadZone)):
-                    lifes -= 1
-            
-
+        physics_system.update()
         # Draw
         # ----------------------------------------------------------------------------------
         rl.begin_drawing()
         rl.clear_background(rl.RAYWHITE)
         game_level.draw()
-            
-        rl.draw_text(f"VIDAS: {lifes}", 10, 40, 20, rl.GRAY)
         rl.end_drawing()
         # ----------------------------------------------------------------------------------
 

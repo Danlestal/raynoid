@@ -2,11 +2,13 @@ from typing import List, Optional
 from domain.ball import Ball
 from domain.boulder import Boulder
 from pyray import Vector2
+from domain.deadzone import DeadZone
 from domain.level import Level
 from domain.player import Player
 from pyray import Vector2
 
 from domain.I_2d_entity import I2DEntity
+from systems.system import ISystem
 
 class Collision:
     def __init__(self,
@@ -17,13 +19,14 @@ class Collision:
         self.second_entity = second_entity
         self.collision_vector = collision_vector
 
-class BruteForcePhysicsSystem:
+class BruteForcePhysicsSystem(ISystem):
     
     def __init__(self,
                  level:Level,
                  game_boundaries:Vector2):
         self.game_boundaries = game_boundaries
         self.level = level
+        
     
     def _check_game_boundaries(self, ball: Ball) -> Optional[Collision]:
         if ball.get_left_boundary() <= 0 or ball.get_right_boundary() >= self.game_boundaries.x:
@@ -39,7 +42,25 @@ class BruteForcePhysicsSystem:
             return Collision(ball, player, Vector2(1,-1))
         return None
 
-    def detect_collision(self,
+
+    def update(self) -> List[Collision]:
+        collisions = map(lambda ball: self._detect_collision(ball,self.level.player),
+                         self.level.balls)
+        for collision in collisions:
+            if collision:
+                ball = collision.first_entity
+                ball.on_collision(collision.collision_vector)
+                if (collision.second_entity):
+                    if (collision.second_entity.is_breakable()):
+                        self.level.remove_entity(collision.second_entity)
+
+                    if (isinstance(collision.second_entity, DeadZone)):
+                        self.level.lifes -= 1
+            
+            
+            
+        
+    def _detect_collision(self,
                          ball: Ball,
                          player:Player ) -> Optional[Collision]:
         # Check boundaries
@@ -57,8 +78,7 @@ class BruteForcePhysicsSystem:
             if ball.check_collision(boulder):
                 return Collision(ball, boulder, ball.get_collission_vector(boulder))     
                 
-        # Check deadzone
-        # if ball.get_down_boundary() >= self.deadzone.position.y:
-        #     return Collision(ball, self.deadzone, Vector2(1,-1))
+        if ball.get_down_boundary() >= self.level.deadzone.position.y:
+            return Collision(ball, self.level.deadzone, Vector2(1,-1))
         
         return None
