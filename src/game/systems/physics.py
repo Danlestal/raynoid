@@ -25,7 +25,12 @@ class BruteForcePhysicsSystem(ISystem):
                  game_boundaries:Vector2):
         self.game_boundaries = game_boundaries
         
-    
+
+    def update(self, level:GameLevel):
+        boulders = filter(lambda x: isinstance(x, Boulder), level.entities)
+        collisions = map(lambda ball: self._detect_collision(ball, level.player, boulders, level.deadzone), level.balls)
+        self._process_collisions(level, collisions)
+            
     def _check_game_boundaries(self, ball: Ball) -> Optional[Collision]:
         if ball.get_left_boundary() <= 0 or ball.get_right_boundary() >= self.game_boundaries.x:
             return Collision(ball, None, Vector2(-1,1)) #Maybe later we add a wall entity.
@@ -40,12 +45,6 @@ class BruteForcePhysicsSystem(ISystem):
             return Collision(ball, player, Vector2(1,-1))
         return None
 
-
-    def update(self, level:GameLevel):
-        boulders = filter(lambda x: isinstance(x, Boulder), level.entities)
-        collisions = map(lambda ball: self._detect_collision(ball, level.player, boulders, level.deadzone), level.balls)
-        self._process_collisions(level, collisions)
-
     def _process_collisions(self, level, collisions):
         for collision in collisions:
             if collision:
@@ -57,7 +56,6 @@ class BruteForcePhysicsSystem(ISystem):
 
                     if (isinstance(collision.second_entity, DeadZone)):
                         level.lifes -= 1
-            
             
     def _detect_collision(self,
                          ball: Ball,
