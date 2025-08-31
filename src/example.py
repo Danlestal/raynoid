@@ -37,8 +37,9 @@ def main():
     rl.init_window(screen_width, screen_height, "Arkanoid")
     rl.set_target_fps(60)  # Set our game to run at 60 frames-per-second
 
-    
-    game_level = GameLevel()
+    physics_system = BruteForcePhysicsSystem(Vector2(screen_width, screen_height))   
+    logic_system = Logic()
+    game_level = GameLevel(systems=[physics_system, logic_system])
     ball = Ball(initial_position=Vector2(400, 225),
                 initial_vector=Vector2(3, -3),
                 radius=10)
@@ -51,10 +52,7 @@ def main():
     game_level.add_entity(player)
     
     configure_level_boulders(game_level)
-    physics_system = BruteForcePhysicsSystem(game_level,
-                                             Vector2(screen_width, screen_height))   
-    
-    logic_system = Logic(level=game_level)
+
     
     current_level: Level = game_level
     # Main game loop
@@ -72,10 +70,7 @@ def main():
         # I would like to add the systems to the level class.
         # ---------------
         current_level = current_level.next_level() or current_level
-        if isinstance(current_level, GameLevel):
-            physics_system.update()
-            logic_system.update()
-        
+        current_level.update_systems()      
         
         # Draw
         # ----------------------------------------------------------------------------------

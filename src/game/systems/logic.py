@@ -3,14 +3,10 @@ from game.systems.system import ISystem
 
 
 class Logic(ISystem):
-    
-    def __init__(self, level:GameLevel):
-        self.level = level
-        
-        
-    def update(self):
-        for ball in self.level.balls:
+            
+    def update(self, level:GameLevel):
+        for ball in level.balls:
             ball.update_position()
             
-        self.level.player.update_position()
+        level.player.update_position()
     

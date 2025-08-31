@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional
 from game.domain.ball import Ball
 from game.domain.boulder import Boulder
 from pyray import Vector2
@@ -21,10 +21,8 @@ class Collision:
 class BruteForcePhysicsSystem(ISystem):
     
     def __init__(self,
-                 level:GameLevel,
                  game_boundaries:Vector2):
         self.game_boundaries = game_boundaries
-        self.level = level
         
     
     def _check_game_boundaries(self, ball: Ball) -> Optional[Collision]:
@@ -42,24 +40,26 @@ class BruteForcePhysicsSystem(ISystem):
         return None
 
 
-    def update(self):
-        collisions = map(lambda ball: self._detect_collision(ball,self.level.player),
-                         self.level.balls)
+    def update(self, level:GameLevel):
+        boulders = filter(lambda x: isinstance(x, Boulder), level.entities)
+        collisions = map(lambda ball: self._detect_collision(ball, level.player, boulders, level.deadzone), level.balls)
         for collision in collisions:
             if collision:
                 ball = collision.first_entity
                 ball.on_collision(collision.collision_vector)
                 if (collision.second_entity):
                     if (collision.second_entity.is_breakable()):
-                        self.level.remove_entity(collision.second_entity)
+                        level.remove_entity(collision.second_entity)
 
                     if (isinstance(collision.second_entity, DeadZone)):
-                        self.level.lifes -= 1
+                        level.lifes -= 1
             
             
     def _detect_collision(self,
                          ball: Ball,
-                         player:Player ) -> Optional[Collision]:
+                         player:Player,
+                         boulders: List[Boulder],
+                         deadzone: DeadZone) -> Optional[Collision]:
         # Check boundaries
         collision_detected = self._check_game_boundaries(ball)
         if collision_detected:
@@ -71,11 +71,11 @@ class BruteForcePhysicsSystem(ISystem):
             return collision_detected
 
         # Check boulder collision
-        for boulder in filter(lambda x: isinstance(x,Boulder), self.level.get_entities()):
+        for boulder in boulders:
             if ball.check_collision(boulder):
                 return Collision(ball, boulder, ball.get_collission_vector(boulder))     
                 
-        if ball.get_down_boundary() >= self.level.deadzone.position.y:
-            return Collision(ball, self.level.deadzone, Vector2(1,-1))
+        if ball.get_down_boundary() >= deadzone.position.y:
+            return Collision(ball, deadzone, Vector2(1,-1))
         
         return None

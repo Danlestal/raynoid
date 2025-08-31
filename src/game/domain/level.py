@@ -5,6 +5,7 @@ from game.domain.twod_entity import TwoD_Entity
 from game.domain.ball import Ball
 from game.domain.deadzone import DeadZone
 from game.domain.player import Player
+from game.systems.system import ISystem
 
 
 class Level(Protocol):
@@ -14,13 +15,18 @@ class Level(Protocol):
     def next_level(self) ->  Optional["Level"]:
         pass
         
-
+    def update_systems(self):
+        pass
+    
 class GameScoreLevel(Level):
     def draw(self):
          rl.draw_text(f"GAME OVER",  10, 40, 20, rl.BLACK)
     
     def next_level(self):
         return None
+    
+    def update_systems(self):
+        pass
         
 
 class GameLevel(Level):
@@ -29,13 +35,15 @@ class GameLevel(Level):
     player: Player
     lifes: int
     deadzone: DeadZone
+    systems: List[ISystem]
     
-    def __init__(self):
+    def __init__(self, systems:List[ISystem] ):
         self.entities = []
         self.balls = []
         self.player = None
         self.deadzone = None
         self.lifes = 3
+        self.systems = systems
     
     def add_entity(self, entity:TwoD_Entity) -> None:
         self.entities.append(entity)
@@ -70,3 +78,7 @@ class GameLevel(Level):
     def next_level(self):
         if self.lifes == 0 or self.get_remaining_boulders() == 0:
             return GameScoreLevel()
+
+    def update_systems(self):
+        for system in self.systems:
+            system.update(self)
