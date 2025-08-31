@@ -6,7 +6,7 @@ from typing import List
 from game.domain.ball import Ball
 from game.domain.boulder import Boulder
 from game.domain.deadzone import DeadZone
-from game.domain.level import GameLevel
+from game.domain.level import GameLevel, Level
 from game.domain.player import Player
 from game.systems.logic import Logic
 from game.systems.physics import BruteForcePhysicsSystem
@@ -55,26 +55,33 @@ def main():
                                              Vector2(screen_width, screen_height))   
     
     logic_system = Logic(level=game_level)
-
+    
+    current_level: Level = game_level
     # Main game loop
     while not rl.window_should_close():
-        # --------------
+        # ---------------
         # Read keyboard
-        # ----------------------------------------------------------------------------------
+        # ---------------
         if rl.is_key_down(rl.KeyboardKey.KEY_RIGHT):
             player.speed.x += 1.5
         if rl.is_key_down(rl.KeyboardKey.KEY_LEFT):
             player.speed.x -= 1.5
         
-
+        # ---------------
         # Update game logic
-        physics_system.update()
-        logic_system.update()
+        # I would like to add the systems to the level class.
+        # ---------------
+        current_level = current_level.next_level() or current_level
+        if isinstance(current_level, GameLevel):
+            physics_system.update()
+            logic_system.update()
+        
+        
         # Draw
         # ----------------------------------------------------------------------------------
         rl.begin_drawing()
         rl.clear_background(rl.RAYWHITE)
-        game_level.draw()
+        current_level.draw()
         rl.end_drawing()
         # ----------------------------------------------------------------------------------
 

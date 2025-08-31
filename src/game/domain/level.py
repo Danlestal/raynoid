@@ -1,5 +1,6 @@
 from typing import List, Optional, Protocol
 import pyray as rl
+from game.domain.boulder import Boulder
 from game.domain.twod_entity import TwoD_Entity
 from game.domain.ball import Ball
 from game.domain.deadzone import DeadZone
@@ -13,6 +14,13 @@ class Level(Protocol):
     def next_level(self) ->  Optional["Level"]:
         pass
         
+
+class GameScoreLevel(Level):
+    def draw(self):
+         rl.draw_text(f"GAME OVER",  10, 40, 20, rl.BLACK)
+    
+    def next_level(self):
+        return None
         
 
 class GameLevel(Level):
@@ -56,3 +64,9 @@ class GameLevel(Level):
             entity.draw() 
         rl.draw_text(f"VIDAS: {self.lifes}", 10, 40, 20, rl.GRAY)
         
+    def get_remaining_boulders(self):
+        return len(set(filter(lambda x: isinstance(x,Boulder), self.entities)))
+    
+    def next_level(self):
+        if self.lifes == 0 or self.get_remaining_boulders() == 0:
+            return GameScoreLevel()
