@@ -8,6 +8,7 @@ from domain.boulder import Boulder
 from domain.deadzone import DeadZone
 from domain.level import GameLevel, Level
 from domain.player import Player
+from systems.logic import Logic
 from systems.physics import BruteForcePhysicsSystem
 
 def configure_level_boulders(level: Level) -> List[Boulder]:
@@ -52,6 +53,8 @@ def main():
     level: List[Boulder] = configure_level_boulders(game_level)
     physics_system = BruteForcePhysicsSystem(level,
                                              Vector2(screen_width, screen_height))   
+    
+    logic_system = Logic(level=level)
 
     # Main game loop
     while not rl.window_should_close():
@@ -65,8 +68,8 @@ def main():
         
 
         # Update game logic
-        game_level.update_logic()
         physics_system.update()
+        logic_system.update()
         # Draw
         # ----------------------------------------------------------------------------------
         rl.begin_drawing()

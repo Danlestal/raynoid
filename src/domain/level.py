@@ -2,11 +2,8 @@ from typing import List, Optional, Protocol
 import pyray as rl
 from domain.I_2d_entity import I2DEntity
 from domain.ball import Ball
-from domain.boulder import Boulder
 from domain.deadzone import DeadZone
-from domain.moving_entity import IMovingEntity
 from domain.player import Player
-from systems.system import ISystem
 
 
 class Level(Protocol):
@@ -24,7 +21,6 @@ class GameLevel(Level):
     player: Player
     lifes: int
     deadzone: DeadZone
-    systems: List[ISystem]
     
     def __init__(self):
         self.entities = []
@@ -60,8 +56,3 @@ class GameLevel(Level):
             entity.draw() 
         rl.draw_text(f"VIDAS: {self.lifes}", 10, 40, 20, rl.GRAY)
         
-
-    def update_logic(self):
-        self.player.update_position()
-        for ball in self.balls:
-            ball.update_position()

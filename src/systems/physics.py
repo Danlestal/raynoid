@@ -1,13 +1,12 @@
-from typing import List, Optional
+from typing import Optional
 from domain.ball import Ball
 from domain.boulder import Boulder
 from pyray import Vector2
 from domain.deadzone import DeadZone
-from domain.level import Level
+from domain.level import GameLevel
 from domain.player import Player
 from pyray import Vector2
 
-from domain.I_2d_entity import I2DEntity
 from systems.system import ISystem
 
 class Collision:
@@ -22,7 +21,7 @@ class Collision:
 class BruteForcePhysicsSystem(ISystem):
     
     def __init__(self,
-                 level:Level,
+                 level:GameLevel,
                  game_boundaries:Vector2):
         self.game_boundaries = game_boundaries
         self.level = level
@@ -43,7 +42,7 @@ class BruteForcePhysicsSystem(ISystem):
         return None
 
 
-    def update(self) -> List[Collision]:
+    def update(self):
         collisions = map(lambda ball: self._detect_collision(ball,self.level.player),
                          self.level.balls)
         for collision in collisions:

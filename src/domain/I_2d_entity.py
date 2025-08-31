@@ -24,10 +24,10 @@ class I2DEntity:
     
     #Returns the normal collision vector
     def get_collission_vector(self, other: "I2DEntity") -> Vector2:
-        surface_distances = {
-            Vector2(-1, 1): self.get_left_boundary() - other.get_right_boundary(),
-            Vector2(1, 1): other.get_left_boundary() - self.get_right_boundary(),
-            Vector2(1, -1): self.get_top_boundary() - other.get_down_boundary(),
-            Vector2(1, 1): other.get_top_boundary() - self.get_down_boundary()
+        overlaps = {
+            Vector2(-1, 1): abs(self.get_left_boundary() - other.get_right_boundary()),   # Collision from right
+            Vector2(-1, 1): abs(self.get_right_boundary() - other.get_left_boundary()),   # Collision from left
+            Vector2(1, -1): abs(self.get_top_boundary() - other.get_down_boundary()),    # Collision from below
+            Vector2(1, -1): abs(self.get_down_boundary() - other.get_top_boundary()),     # Collision from above
         }
-        return max(surface_distances, key=surface_distances.get)
+        return min(overlaps, key=overlaps.get)
