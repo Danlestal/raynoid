@@ -1,4 +1,4 @@
-from game.domain.level import GameLevel
+from game.domain.game_level import GameLevel
 from game.systems.system import ISystem
 
 

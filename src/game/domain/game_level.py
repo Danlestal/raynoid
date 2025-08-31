@@ -1,7 +1,7 @@
 from typing import List
 import pyray as rl
 from game.domain.boulder import Boulder
-from game.domain.level import GameScoreLevel, Level
+from game.domain.level import Level
 from game.domain.twod_entity import TwoD_Entity
 from game.domain.ball import Ball
 from game.domain.deadzone import DeadZone
@@ -11,20 +11,13 @@ from game.systems.system import ISystem
 
 
 class GameLevel(Level):
-    entities: List[TwoD_Entity]
-    balls: List[Ball]
-    player: Player
-    lifes: int
-    deadzone: DeadZone
-    systems: List[ISystem]
-    
     def __init__(self, systems:List[ISystem] ):
-        self.entities = []
-        self.balls = []
-        self.player = None
-        self.deadzone = None
-        self.lifes = 3
-        self.systems = systems
+        self.entities: List[TwoD_Entity] = []
+        self.balls: List[Ball] = []
+        self.player: Player = None
+        self.deadzone: DeadZone = None
+        self.lifes: int = 3
+        self.systems: List[ISystem] = systems
     
     def add_entity(self, entity:TwoD_Entity) -> None:
         self.entities.append(entity)
