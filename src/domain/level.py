@@ -1,6 +1,6 @@
 from typing import List, Optional, Protocol
 import pyray as rl
-from domain.I_2d_entity import I2DEntity
+from domain.TwoD_entity import TwoD_Entity
 from domain.ball import Ball
 from domain.deadzone import DeadZone
 from domain.player import Player
@@ -16,7 +16,7 @@ class Level(Protocol):
         
 
 class GameLevel(Level):
-    entities: List[I2DEntity]
+    entities: List[TwoD_Entity]
     balls: List[Ball]
     player: Player
     lifes: int
@@ -29,7 +29,7 @@ class GameLevel(Level):
         self.deadzone = None
         self.lifes = 3
     
-    def add_entity(self, entity:I2DEntity) -> None:
+    def add_entity(self, entity:TwoD_Entity) -> None:
         self.entities.append(entity)
         if isinstance(entity,Ball):
             self.balls.append(entity)
@@ -43,12 +43,12 @@ class GameLevel(Level):
             self.deadzone = entity
             return 
                 
-    def remove_entity(self, entity:I2DEntity) -> None:
+    def remove_entity(self, entity:TwoD_Entity) -> None:
         self.entities.remove(entity)
         if isinstance(entity, Ball):
             self.balls.remove(entity)
         
-    def get_entities(self) -> I2DEntity:
+    def get_entities(self) -> TwoD_Entity:
         return self.entities
     
     def draw(self):

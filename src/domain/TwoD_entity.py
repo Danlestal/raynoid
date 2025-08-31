@@ -1,5 +1,5 @@
 from pyray import Vector2
-class I2DEntity:
+class TwoD_Entity:
     def get_left_boundary(self):
         raise NotImplementedError()
 
@@ -12,7 +12,7 @@ class I2DEntity:
     def get_down_boundary(self):
         raise NotImplementedError()
     
-    def check_collision(self, other: "I2DEntity" ) -> bool:
+    def check_collision(self, other: "TwoD_Entity" ) -> bool:
         if (
         self.get_right_boundary() >= other.get_left_boundary() and 
         self.get_left_boundary() <= other.get_right_boundary()):
@@ -23,7 +23,7 @@ class I2DEntity:
     
     
     #Returns the normal collision vector
-    def get_collission_vector(self, other: "I2DEntity") -> Vector2:
+    def get_collission_vector(self, other: "TwoD_Entity") -> Vector2:
         overlaps = {
             Vector2(-1, 1): abs(self.get_left_boundary() - other.get_right_boundary()),   # Collision from right
             Vector2(-1, 1): abs(self.get_right_boundary() - other.get_left_boundary()),   # Collision from left

@@ -3,12 +3,12 @@ from pyray import Vector2
 import pyray as rl
 
 from domain.ibreakable import IBreakable
-from domain.I_2d_entity import I2DEntity
+from domain.TwoD_entity import TwoD_Entity
 from domain.moving_entity import IMovingEntity
 
 
 
-class Ball(IBreakable, I2DEntity, IMovingEntity):
+class Ball(IBreakable, TwoD_Entity, IMovingEntity):
     def __init__(self, initial_position: Vector2, initial_vector: Vector2, radius: float):
         self.position = initial_position
         self.vector = initial_vector

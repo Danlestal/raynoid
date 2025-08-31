@@ -2,9 +2,9 @@ from pyray import Vector2
 import pyray as rl
 
 from domain.ibreakable import IBreakable
-from domain.I_2d_entity import I2DEntity
+from domain.TwoD_entity import TwoD_Entity
 
-class DeadZone(IBreakable, I2DEntity):
+class DeadZone(IBreakable, TwoD_Entity):
     def __init__(self, position: Vector2, width: float, height: float):
         self.position = position
         self.width = width

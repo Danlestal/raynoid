@@ -2,10 +2,10 @@ import pyray as rl
 from pyray import Vector2
 
 from domain.ibreakable import IBreakable
-from domain.I_2d_entity import I2DEntity
+from domain.TwoD_entity import TwoD_Entity
 from domain.moving_entity import IMovingEntity
 
-class Player(IBreakable, I2DEntity, IMovingEntity):
+class Player(IBreakable, TwoD_Entity, IMovingEntity):
     def __init__(self, position, width, height):
         self.position = position
         self.width = width
