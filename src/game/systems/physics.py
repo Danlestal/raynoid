@@ -3,7 +3,8 @@ from game.domain.ball import Ball
 from game.domain.boulder import Boulder
 from pyray import Vector2
 from game.domain.deadzone import DeadZone
-from game.domain.level import GameLevel
+
+from game.domain.game_level import GameLevel
 from game.domain.player import Player
 from pyray import Vector2
 
