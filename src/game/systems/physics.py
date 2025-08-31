@@ -43,6 +43,9 @@ class BruteForcePhysicsSystem(ISystem):
     def update(self, level:GameLevel):
         boulders = filter(lambda x: isinstance(x, Boulder), level.entities)
         collisions = map(lambda ball: self._detect_collision(ball, level.player, boulders, level.deadzone), level.balls)
+        self._process_collisions(level, collisions)
+
+    def _process_collisions(self, level, collisions):
         for collision in collisions:
             if collision:
                 ball = collision.first_entity
