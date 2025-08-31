@@ -1,13 +1,13 @@
 from typing import Optional
-from domain.ball import Ball
-from domain.boulder import Boulder
+from game.domain.ball import Ball
+from game.domain.boulder import Boulder
 from pyray import Vector2
-from domain.deadzone import DeadZone
-from domain.level import GameLevel
-from domain.player import Player
+from game.domain.deadzone import DeadZone
+from game.domain.level import GameLevel
+from game.domain.player import Player
 from pyray import Vector2
 
-from systems.system import ISystem
+from game.systems.system import ISystem
 
 class Collision:
     def __init__(self,

@@ -3,21 +3,21 @@ import pyray as rl
 from pyray import Vector2
 from typing import List
 
-from domain.ball import Ball
-from domain.boulder import Boulder
-from domain.deadzone import DeadZone
-from domain.level import GameLevel, Level
-from domain.player import Player
-from systems.logic import Logic
-from systems.physics import BruteForcePhysicsSystem
+from game.domain.ball import Ball
+from game.domain.boulder import Boulder
+from game.domain.deadzone import DeadZone
+from game.domain.level import GameLevel, Level
+from game.domain.player import Player
+from game.systems.logic import Logic
+from game.systems.physics import BruteForcePhysicsSystem
 
-def configure_level_boulders(level: Level) -> List[Boulder]:
+def configure_level_boulders(level: GameLevel) -> List[Boulder]:
     start_x = 50
     start_y = 50
     width = 60
     height = 20
     padding = 10
-    rows = 5
+    rows = 6
     cols = 10
 
     for row in range(rows):
@@ -50,11 +50,11 @@ def main():
     player = Player(position=Vector2(screen_width/2 - 50, screen_height-30), width=80, height=20)
     game_level.add_entity(player)
     
-    level: List[Boulder] = configure_level_boulders(game_level)
-    physics_system = BruteForcePhysicsSystem(level,
+    configure_level_boulders(game_level)
+    physics_system = BruteForcePhysicsSystem(game_level,
                                              Vector2(screen_width, screen_height))   
     
-    logic_system = Logic(level=level)
+    logic_system = Logic(level=game_level)
 
     # Main game loop
     while not rl.window_should_close():

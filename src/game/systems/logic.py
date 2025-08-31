@@ -1,5 +1,5 @@
-from domain.level import GameLevel
-from systems.system import ISystem
+from game.domain.level import GameLevel
+from game.systems.system import ISystem
 
 
 class Logic(ISystem):

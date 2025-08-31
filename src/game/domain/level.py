@@ -1,9 +1,9 @@
 from typing import List, Optional, Protocol
 import pyray as rl
-from domain.TwoD_entity import TwoD_Entity
-from domain.ball import Ball
-from domain.deadzone import DeadZone
-from domain.player import Player
+from game.domain.twod_entity import TwoD_Entity
+from game.domain.ball import Ball
+from game.domain.deadzone import DeadZone
+from game.domain.player import Player
 
 
 class Level(Protocol):

@@ -1,14 +1,20 @@
 from pyray import Vector2
-class TwoD_Entity:
+from abc import ABC, abstractmethod
+
+class TwoD_Entity(ABC):
+    @abstractmethod
     def get_left_boundary(self):
         raise NotImplementedError()
 
+    @abstractmethod
     def get_right_boundary(self):
         raise NotImplementedError()
 
+    @abstractmethod
     def get_top_boundary(self):
         raise NotImplementedError()
 
+    @abstractmethod
     def get_down_boundary(self):
         raise NotImplementedError()
     

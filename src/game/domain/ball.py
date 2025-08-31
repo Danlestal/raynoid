@@ -2,9 +2,9 @@
 from pyray import Vector2
 import pyray as rl
 
-from domain.ibreakable import IBreakable
-from domain.TwoD_entity import TwoD_Entity
-from domain.moving_entity import IMovingEntity
+from game.domain.ibreakable import IBreakable
+from game.domain.twod_entity import TwoD_Entity
+from game.domain.moving_entity import IMovingEntity
 
 
 
