@@ -6,7 +6,7 @@ from typing import List
 from game.domain.ball import Ball
 from game.domain.boulder import Boulder
 from game.domain.deadzone import DeadZone
-from game.domain.level import GameLevel, Level
+from game.domain.level import GameLevel
 from game.domain.player import Player
 from game.systems.logic import Logic
 from game.systems.physics import BruteForcePhysicsSystem
