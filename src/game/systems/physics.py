@@ -19,6 +19,7 @@ class Collision:
         self.second_entity = second_entity
         self.collision_vector = collision_vector
 
+
 class BruteForcePhysicsSystem(ISystem):
     
     def __init__(self,
