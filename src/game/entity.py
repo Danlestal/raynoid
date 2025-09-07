@@ -4,8 +4,8 @@ from game.components import Component, ComponentType
 
 
 class Entity:
-    def __init__(self, entity_id):
-        self.entity_id = entity_id
+    def __init__(self, id):
+        self.id = id
         self.components: List[Optional[Component]] = [None] *(len(ComponentType))
 
     def add_component(self, component: Component):
