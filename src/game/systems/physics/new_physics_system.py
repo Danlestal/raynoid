@@ -13,8 +13,8 @@ from game.systems.system import GameSystem
 
 @dataclass(slots=True)
 class CollisionEvent(GameEvent):
-    entity1: 'Entity'
-    entity2: 'Entity' 
+    entity1: Entity
+    entity2: Entity 
     collision_vector: Vector2
     
 class PhysicsSystem(GameSystem):
