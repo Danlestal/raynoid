@@ -9,6 +9,8 @@ class ComponentType(Enum):
     VELOCITY = 1
     BOUNDING_BOX = 2
     SPRITE = 3
+    COLLISION_RESPONSE = 4
+    HEALTH = 5
     
 
 
@@ -40,6 +42,7 @@ class CollisionResponseType(Enum):
     
 @dataclass(slots=True)
 class CollisionResponse(Component):
+    type = ComponentType.COLLISION_RESPONSE
     response_type: CollisionResponseType
     health: int = 1
     is_destructible: bool = True

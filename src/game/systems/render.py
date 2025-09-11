@@ -15,7 +15,7 @@ class RenderSystem(GameSystem):
 
 
     def update(self):
-        entities:List[Entity] = self.entities_db.get_entities_with_component(component_type=ComponentType.SPRITE)
+        entities:List[Entity] = self.entities_db.get_all_entities()
         for entity in entities:
             # sprite = entity.get_component(ComponentType.SPRITE)
             # later on this would be a proper sprite render

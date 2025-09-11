@@ -9,8 +9,8 @@ class EntitiesRepo:
     def __init__(self):
         self.entities: Dict[UUID, Entity] = {}
 
-    def add_entity(self, entity_id, entity):
-        self.entities[entity_id] = entity
+    def add_entity(self, entity):
+        self.entities[entity.id] = entity
 
     def remove_entity(self, entity_id):
         if entity_id in self.entities:
