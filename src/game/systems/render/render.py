@@ -30,13 +30,14 @@ class RenderSystem(GameSystem):
             if texture:
                 position: Position = entity.get_component(ComponentType.POSITION)
                 bounding_box = entity.get_component(ComponentType.BOUNDING_BOX)
-                source_rect = RLRectangle(0, 0, 32, 32)
+                #source_rect = RLRectangle(0, 0, 32, 32)
                 dest_rect = RLRectangle(
                     position.position.x,
                     position.position.y,
                     bounding_box.width,
                     bounding_box.height
                 )
-                rl.draw_texture_pro(texture, source_rect, dest_rect, rl.Vector2(0, 0), 0, rl.WHITE)
+                # rl.draw_texture_pro(texture, source_rect, dest_rect, rl.Vector2(0, 0), 0, rl.WHITE)
+                rl.draw_rectangle_lines_ex(dest_rect, 1, rl.RED)
 
 

@@ -5,7 +5,7 @@ from game.entities_repo import EntitiesRepo
 
 from game.systems.render.render import RenderSystem
 from game.systems.render.textures_repo import TextureRepo
-from raynoid.factories.entities.boulder import build_boulder
+from raynoid.factories.entities.boulder import build_barrier, build_boulder
 
 def main():
     # Initialization
@@ -17,7 +17,15 @@ def main():
     rl.set_target_fps(60)  # Set our game to run at 60 frames-per-second
 
     entities_repo = EntitiesRepo()
-    boulder = build_boulder(100, 100, 32, 32)
+    boulder = build_boulder(100, 100, 32, 20)
+    left_barrier = build_barrier(0, 0, 32, 450)
+    right_barrier = build_barrier(800-32, 0, 32, 450)
+    top_barrier = build_barrier(0, 0, 800, 32)
+    bottom_barrier = build_barrier(0, 450-32, 800, 32)
+    entities_repo.add_entity(entity=left_barrier)
+    entities_repo.add_entity(entity=right_barrier)
+    entities_repo.add_entity(entity=top_barrier)
+    entities_repo.add_entity(entity=bottom_barrier)
     entities_repo.add_entity(entity=boulder)
 
     texture_repo = TextureRepo()
