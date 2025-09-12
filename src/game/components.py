@@ -33,6 +33,11 @@ class BoundingRectangle(Component):
     width: float
     height: float
 
+@dataclass(slots=True)
+class Sprite(Component):
+    type = ComponentType.SPRITE
+    texture_id: str  # Reference to a texture in a texture repository
+
 
 class CollisionResponseType(Enum):
     BOUNCE = 0

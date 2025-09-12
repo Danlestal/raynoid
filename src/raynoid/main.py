@@ -2,7 +2,9 @@
 import pyray as rl
 
 from game.entities_repo import EntitiesRepo
-from game.systems.render import RenderSystem
+
+from game.systems.render.render import RenderSystem
+from game.systems.render.textures_repo import TextureRepo
 from raynoid.factories.entities.boulder import build_boulder
 
 def main():
@@ -11,13 +13,16 @@ def main():
     screen_height = 450
 
 
-    rl.init_window(screen_width, screen_height, "LOL")
+    rl.init_window(screen_width, screen_height, "Raynoid")
     rl.set_target_fps(60)  # Set our game to run at 60 frames-per-second
 
     entities_repo = EntitiesRepo()
-    boulder = build_boulder(100, 100, 50, 50)
+    boulder = build_boulder(100, 100, 20, 10)
     entities_repo.add_entity(entity=boulder)
-    render_system = RenderSystem(entities_repo)
+
+    texture_repo = TextureRepo()
+    texture_repo.load_texture("boulder", "raynoid/resources/red.png")
+    render_system = RenderSystem(entities_repo, texture_repo)
     # Main game loop
     while not rl.window_should_close():
         # ----------------------------------------------------------------------------------
