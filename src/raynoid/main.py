@@ -17,7 +17,7 @@ def main():
     rl.set_target_fps(60)  # Set our game to run at 60 frames-per-second
 
     entities_repo = EntitiesRepo()
-    boulder = build_boulder(100, 100, 20, 10)
+    boulder = build_boulder(100, 100, 32, 32)
     entities_repo.add_entity(entity=boulder)
 
     texture_repo = TextureRepo()

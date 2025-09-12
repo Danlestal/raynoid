@@ -23,9 +23,20 @@ class RenderSystem(GameSystem):
         for entity in entities:
             sprite = entity.get_component(ComponentType.SPRITE)
             texture = self.texture_repo.get_texture(sprite.texture_id)
+
+            bounding_box = entity.get_component(ComponentType.BOUNDING_BOX)
+            
+
             if texture:
-                position:Position = entity.get_component(ComponentType.POSITION)
-                source_rect = RLRectangle(0, 0, 32, 32)
-                rl.draw_texture_rec(texture, source_rect, rl.Vector2(int(position.position.x), int(position.position.y)), rl.WHITE)
+                position: Position = entity.get_component(ComponentType.POSITION)
+                bounding_box = entity.get_component(ComponentType.BOUNDING_BOX)
+                source_rect = RLRectangle(0, 0, 32, 32)  # or texture.width/height if you want full texture
+                dest_rect = RLRectangle(
+                    position.position.x,
+                    position.position.y,
+                    bounding_box.width,
+                    bounding_box.height
+                )
+                rl.draw_texture_pro(texture, source_rect, dest_rect, rl.Vector2(0, 0), 0, rl.WHITE)
 
 
