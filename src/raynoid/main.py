@@ -21,7 +21,7 @@ def main():
     entities_repo.add_entity(entity=boulder)
 
     texture_repo = TextureRepo()
-    texture_repo.load_texture("boulder", "raynoid/resources/red.png")
+    texture_repo.load_texture("boulder", "../resources/raynoid/red.png")
     render_system = RenderSystem(entities_repo, texture_repo)
     # Main game loop
     while not rl.window_should_close():
@@ -30,8 +30,7 @@ def main():
         # ----------------------------------------------------------------------------------
         rl.begin_drawing()
         rl.clear_background(rl.RAYWHITE)
-        render_system.update()
-        
+        render_system.update() 
         rl.end_drawing()
         # ----------------------------------------------------------------------------------
 
