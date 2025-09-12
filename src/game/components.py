@@ -33,10 +33,20 @@ class BoundingRectangle(Component):
     width: float
     height: float
 
+class FillMethod(Enum):
+    STRETCH = "stretch"
+    TILE = "tile"
+    CENTER = "center"
+
 @dataclass(slots=True)
 class Sprite(Component):
     type = ComponentType.SPRITE
-    texture_id: str  # Reference to a texture in a texture repository
+    texture_id: str
+    fill_method: FillMethod
+
+
+
+
 
 
 class CollisionResponseType(Enum):

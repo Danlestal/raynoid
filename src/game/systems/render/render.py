@@ -30,7 +30,7 @@ class RenderSystem(GameSystem):
             if texture:
                 position: Position = entity.get_component(ComponentType.POSITION)
                 bounding_box = entity.get_component(ComponentType.BOUNDING_BOX)
-                source_rect = RLRectangle(0, 0, 32, 32)  # or texture.width/height if you want full texture
+                source_rect = RLRectangle(0, 0, 32, 32)
                 dest_rect = RLRectangle(
                     position.position.x,
                     position.position.y,
