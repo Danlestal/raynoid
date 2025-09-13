@@ -9,7 +9,21 @@
 
 ## About <a name = "about"></a>
 
-Write about 1-2 paragraphs describing the purpose of your project.
+Learning project. Just trying to implement an ECS engine using Python and Raylib.
+The ECS pattern I am use is pure, meaning that my components do not have any kind of behaviour. The behavior is implemented in the systems.
+
+### Games
+#### Arkanoid
+That would let me play with the entities position and a really simple Physics system.
+
+- Entities Position and Bounding Boxes
+- Simple Physics System
+- Comunication between systems.
+- Rendering Sprites
+- Playing music.
+- Assets loading
+- Level wrapping.
+
 
 ## Getting Started <a name = "getting_started"></a>
 
