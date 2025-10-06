@@ -25,6 +25,7 @@ def main():
 
     texture_repo = TextureRepo()
     texture_repo.load_texture("boulder", "../resources/raynoid/red.png")
+    texture_repo.load_texture("wall", "../resources/raynoid/brick_wall.png")
     render_system = RenderSystem(entities_repo, texture_repo)
     # Main game loop
     while not rl.window_should_close():

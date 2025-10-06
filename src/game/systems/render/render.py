@@ -2,7 +2,7 @@ from typing import List, Protocol
 
 import pyray as rl
 from pyray import Rectangle as RLRectangle
-from game.components import ComponentType, Position
+from game.components import ComponentType, FillMethod, Position
 from game.entities_repo import EntitiesRepo
 from game.entity import Entity
 from game.systems.render.textures_repo import TextureRepo
@@ -46,7 +46,19 @@ class RenderSystem(GameSystem):
                     sprite.width,
                     sprite.height
                 )
-                rl.draw_texture_pro(texture, source_rect, dest_rect, rl.Vector2(0, 0), 0, rl.WHITE)
-                # rl.draw_rectangle_lines_ex(dest_rect, 1, rl.RED)
+               
+                if sprite.fill_method == FillMethod.TILE:
+                    tile_w, tile_h = texture.width, texture.height
+                    x0, y0 = int(dest_rect.x), int(dest_rect.y)
+                    x1, y1 = int(dest_rect.x + dest_rect.width), int(dest_rect.y + dest_rect.height)
+                    for x in range(x0, x1, tile_w):
+                        for y in range(y0, y1, tile_h):
+                            draw_w = min(tile_w, x1 - x)
+                            draw_h = min(tile_h, y1 - y)
+                            src_rect = RLRectangle(0, 0, draw_w, draw_h)
+                            dst_pos = rl.Vector2(x, y)
+                            rl.draw_texture_rec(texture, src_rect, dst_pos, rl.WHITE)
+                else:
+                    rl.draw_texture_pro(texture, source_rect, dest_rect, rl.Vector2(0, 0), 0, rl.WHITE)
 
 

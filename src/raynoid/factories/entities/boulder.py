@@ -18,5 +18,5 @@ def build_barrier(x, y, width, height) -> Entity:
     barrier.add_component(Position(Vector2(x, y)))
     barrier.add_component(BoundingRectangle(width, height))
     barrier.add_component(CollisionResponse(CollisionResponseType.BOUNCE))
-    barrier.add_component(Sprite(texture_id="boulder", fill_method=FillMethod.STRETCH))
+    barrier.add_component(Sprite(texture_id="wall", fill_method=FillMethod.TILE, width=width, height=height))
     return barrier
