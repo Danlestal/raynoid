@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Protocol
 
 import pyray as rl
 from pyray import Rectangle as RLRectangle
@@ -8,6 +8,19 @@ from game.entity import Entity
 from game.systems.render.textures_repo import TextureRepo
 from game.systems.system import GameSystem
 
+
+class LowLevelRender(Protocol):
+    
+    def draw_texture():
+        pass
+
+    def draw_rectangle():
+        pass
+
+    def draw_circle():
+        pass
+
+    
 
 class RenderSystem(GameSystem):
 
@@ -24,20 +37,16 @@ class RenderSystem(GameSystem):
             sprite = entity.get_component(ComponentType.SPRITE)
             texture = self.texture_repo.get_texture(sprite.texture_id)
 
-            bounding_box = entity.get_component(ComponentType.BOUNDING_BOX)
-            
-
             if texture:
                 position: Position = entity.get_component(ComponentType.POSITION)
-                bounding_box = entity.get_component(ComponentType.BOUNDING_BOX)
-                #source_rect = RLRectangle(0, 0, 32, 32)
+                source_rect = RLRectangle(0, 0, 32, 32)
                 dest_rect = RLRectangle(
-                    position.position.x,
-                    position.position.y,
-                    bounding_box.width,
-                    bounding_box.height
+                    position.position.x + sprite.offset.x,
+                    position.position.y + sprite.offset.y,
+                    sprite.width,
+                    sprite.height
                 )
-                # rl.draw_texture_pro(texture, source_rect, dest_rect, rl.Vector2(0, 0), 0, rl.WHITE)
-                rl.draw_rectangle_lines_ex(dest_rect, 1, rl.RED)
+                rl.draw_texture_pro(texture, source_rect, dest_rect, rl.Vector2(0, 0), 0, rl.WHITE)
+                # rl.draw_rectangle_lines_ex(dest_rect, 1, rl.RED)
 
 

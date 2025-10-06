@@ -43,9 +43,9 @@ class Sprite(Component):
     type = ComponentType.SPRITE
     texture_id: str
     fill_method: FillMethod
-
-
-
+    offset: Vector2 = Vector2(0, 0)
+    height: float = 32
+    width: float = 32
 
 
 
