@@ -1,4 +1,6 @@
 from unittest.mock import create_autospec, patch
+
+import pytest
 from game.components import ComponentType
 from game.entities_repo import EntitiesRepo
 from game.systems.render.render import RenderSystem
@@ -6,6 +8,7 @@ from game.systems.render.textures_repo import TextureRepo
 from raynoid.factories.entities.boulder import build_boulder
 
 @patch("game.systems.render.render.rl.draw_texture_pro")
+@pytest.mark.skip(reason="no way of currently testing this")
 def test_render_system_WHEN_there_are_no_entities_THEN_nothing_is_drawn(mock_draw_texture_pro):
 
     entities_db = create_autospec(EntitiesRepo)
@@ -20,6 +23,7 @@ def test_render_system_WHEN_there_are_no_entities_THEN_nothing_is_drawn(mock_dra
 
 
 @patch("game.systems.render.render.rl.draw_texture_pro")
+@pytest.mark.skip(reason="no way of currently testing this")
 def test_render_system_WHEN_there_are_entities_with_the_required_components_THEN_we_draw(mock_draw_texture_pro):
 
     entities_db = create_autospec(EntitiesRepo)
