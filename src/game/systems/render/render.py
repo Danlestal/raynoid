@@ -59,6 +59,6 @@ class RenderSystem(GameSystem):
                             dst_pos = rl.Vector2(x, y)
                             rl.draw_texture_rec(texture, src_rect, dst_pos, rl.WHITE)
                 else:
-                    rl.draw_texture_pro(texture, source_rect, dest_rect, rl.Vector2(0, 0), 0, rl.WHITE)
+                    rl.draw_texture_pro(texture, source_rect, dest_rect, rl.Vector2(0, 0), 0, rl.BLUE)
 
 
