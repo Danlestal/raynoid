@@ -11,8 +11,6 @@ def build_boulder(x, y, width, height) -> Entity:
     boulder.add_component(Sprite(texture_id="boulder", fill_method=FillMethod.STRETCH))
     return boulder
 
-   
-
 def build_barrier(x, y, width, height) -> Entity:
     barrier = Entity(uuid4())
     barrier.add_component(Position(Vector2(x, y)))
@@ -20,3 +18,11 @@ def build_barrier(x, y, width, height) -> Entity:
     barrier.add_component(CollisionResponse(CollisionResponseType.BOUNCE))
     barrier.add_component(Sprite(texture_id="wall", fill_method=FillMethod.TILE, width=width, height=height))
     return barrier
+
+def build_ball(x,y, width, height) -> Entity:
+    ball = Entity(uuid4())
+    ball.add_component(Position(Vector2(x, y)))
+    ball.add_component(BoundingRectangle(width, height))
+    ball.add_component(CollisionResponse(CollisionResponseType.BOUNCE))
+    ball.add_component(Sprite(texture_id="wall", fill_method=FillMethod.TILE, width=width, height=height))
+    return ball
