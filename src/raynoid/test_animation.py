@@ -22,7 +22,7 @@ def main():
 
     texture_repo = TextureRepo()
     texture_repo.load_texture("ball", "../resources/raynoid/ball.png")
-    entities_repo.add_entity(build_ball(100,100))
+    entities_repo.add_entity(build_ball(320,120))
     
 
     factory = LevelFactory(entities_repo)

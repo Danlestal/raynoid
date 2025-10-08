@@ -24,5 +24,10 @@ def build_ball(x,y) -> Entity:
     ball.add_component(Position(Vector2(x, y)))
     ball.add_component(BoundingRectangle(64, 64))
     ball.add_component(CollisionResponse(CollisionResponseType.BOUNCE))
-    ball.add_component(AnimatedSprite(texture_id="ball", width=64, height=64, frame_height=128, frame_width=128, total_frames=16))
+    ball.add_component(AnimatedSprite(texture_id="ball",
+                                      width=128,
+                                      height=128,
+                                      frame_height=128,
+                                      frame_width=128,
+                                      total_frames=16))
     return ball

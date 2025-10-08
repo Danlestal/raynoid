@@ -17,7 +17,7 @@ class TextureRepo:
     def load_texture(self, name:str, path:str):
         self.textures[name] = load_texture(path)
 
-    def _calculate_rectangle(self, sprite:Sprite) -> RLRectangle:
+    def _calculate_source_rectangle(self, sprite:Sprite) -> RLRectangle:
         if isinstance(sprite, AnimatedSprite):
             return RLRectangle(sprite.frame_width * sprite.current_frame,
                                0,
@@ -30,12 +30,11 @@ class TextureRepo:
                            sprite.height)
 
     def get_texture(self, sprite: Sprite) -> Optional[TextureFrame]:
-        name = sprite.texture_id
-        texture = self.textures.get(name, None)
+        texture = self.textures.get(sprite.texture_id, None)
         if not texture:
             return None
         
-        rectangle = self._calculate_rectangle(texture, sprite)
+        rectangle = self._calculate_source_rectangle(sprite)
 
         return TextureFrame(texture=texture, source_rect=rectangle)
         
