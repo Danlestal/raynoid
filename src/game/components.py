@@ -12,8 +12,6 @@ class ComponentType(Enum):
     COLLISION_RESPONSE = 4
     HEALTH = 5
     
-
-
 class Component:
     type: ComponentType
 

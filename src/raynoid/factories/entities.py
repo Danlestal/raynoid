@@ -19,15 +19,16 @@ def build_barrier(x, y, width, height) -> Entity:
     barrier.add_component(Sprite(texture_id="wall", fill_method=FillMethod.TILE, width=width, height=height))
     return barrier
 
-def build_ball(x,y) -> Entity:
+def build_ball(x,y,frame_duration=0.2) -> Entity:
     ball = Entity(uuid4())
     ball.add_component(Position(Vector2(x, y)))
     ball.add_component(BoundingRectangle(64, 64))
     ball.add_component(CollisionResponse(CollisionResponseType.BOUNCE))
     ball.add_component(AnimatedSprite(texture_id="ball",
-                                      width=128,
-                                      height=128,
+                                      width=64,
+                                      height=64,
                                       frame_height=128,
                                       frame_width=128,
-                                      total_frames=16))
+                                      total_frames=16,
+                                      frame_duration=frame_duration))
     return ball
