@@ -5,6 +5,7 @@ from game.entities_repo import EntitiesRepo
 
 from game.systems.render.render import RenderSystem
 from game.systems.render.textures_repo import TextureRepo
+from raynoid.factories.entities import build_ball
 from raynoid.factories.level import LevelFactory
 
 
@@ -19,12 +20,9 @@ def main():
 
     entities_repo = EntitiesRepo()
 
-
-
     texture_repo = TextureRepo()
-    texture_repo.load_texture("boulder", "./resources/raynoid/red.png")
-    texture_repo.load_texture("wall", "./resources/raynoid/brick_wall.png")
-    texture_repo.load_texture("ball", "./resources/raynoid/ball.png")
+    texture_repo.load_texture("ball", "../resources/raynoid/ball.png")
+    entities_repo.add_entity(build_ball(100,100))
     
 
     factory = LevelFactory(entities_repo)
@@ -36,7 +34,7 @@ def main():
         # Draw
         # ----------------------------------------------------------------------------------
         rl.begin_drawing()
-        rl.clear_background(rl.BLACK)
+        rl.clear_background(rl.WHITE)
         render_system.update() 
         rl.end_drawing()
         # ----------------------------------------------------------------------------------

@@ -46,7 +46,17 @@ class Sprite(Component):
     offset: Vector2 = Vector2(0, 0)
     height: float = 32
     width: float = 32
+    
 
+@dataclass(slots=True)
+class AnimatedSprite(Sprite):
+    total_frames: int = 1
+    frame_duration: float = 0.1
+    elapsed_time: float = 0.0
+    fill_method: FillMethod = FillMethod.STRETCH
+    current_frame: int = 0
+    frame_width: Optional[float] = None
+    frame_height: Optional[float] = None
 
 
 class CollisionResponseType(Enum):

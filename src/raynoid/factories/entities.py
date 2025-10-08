@@ -1,4 +1,4 @@
-from game.components import BoundingRectangle, CollisionResponse, CollisionResponseType, FillMethod, Position, Sprite
+from game.components import AnimatedSprite, BoundingRectangle, CollisionResponse, CollisionResponseType, FillMethod, Position, Sprite
 from game.entity import Entity
 from uuid import uuid4
 from pyray import Vector2
@@ -19,10 +19,10 @@ def build_barrier(x, y, width, height) -> Entity:
     barrier.add_component(Sprite(texture_id="wall", fill_method=FillMethod.TILE, width=width, height=height))
     return barrier
 
-def build_ball(x,y, width, height) -> Entity:
+def build_ball(x,y) -> Entity:
     ball = Entity(uuid4())
     ball.add_component(Position(Vector2(x, y)))
-    ball.add_component(BoundingRectangle(width, height))
+    ball.add_component(BoundingRectangle(64, 64))
     ball.add_component(CollisionResponse(CollisionResponseType.BOUNCE))
-    ball.add_component(Sprite(texture_id="wall", fill_method=FillMethod.TILE, width=width, height=height))
+    ball.add_component(AnimatedSprite(texture_id="ball", width=64, height=64, frame_height=128, frame_width=128, total_frames=16))
     return ball
