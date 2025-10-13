@@ -8,7 +8,7 @@ class LevelFactory:
         pass
 
 
-    def _add_barriers(self):
+    def add_barriers(self):
         left_barrier = build_barrier(0, 0, 32, 450)
         right_barrier = build_barrier(800-32, 0, 32, 450)
         top_barrier = build_barrier(0, 0, 800, 32)
@@ -18,10 +18,8 @@ class LevelFactory:
         self.entities_repo.add_entity(entity=top_barrier)
         self.entities_repo.add_entity(entity=bottom_barrier) 
 
-
-
     def load_harcoded_level(self):
-        self._add_barriers()
+        self.add_barriers()
         columns = 20
         rows = 10
 

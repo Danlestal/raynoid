@@ -28,18 +28,23 @@ class PhysicsSystem(GameSystem):
     def update(self):
         all_entities: List[Entity] = self.entities_db.get_entities_with_component(component_type=ComponentType.BOUNDING_BOX)
         moving_entities = filter(lambda e: e.has_component(ComponentType.VELOCITY), all_entities)
+        processed_pairs = set()
         for moving_entity in moving_entities:
             position: Vector2 = moving_entity.get_component(ComponentType.POSITION).position
-        
             moving_rectangle = Rectangle(
                 position=position,
                 width=moving_entity.get_component(ComponentType.BOUNDING_BOX).width,
                 height=moving_entity.get_component(ComponentType.BOUNDING_BOX).height
-                )
+            )
 
             for other_entity in all_entities:
                 if moving_entity.id == other_entity.id:
                     continue
+
+                pair = tuple(sorted((moving_entity.id, other_entity.id)))
+                if pair in processed_pairs:
+                    continue
+                processed_pairs.add(pair)
 
                 other_rectangle = Rectangle(
                     position=other_entity.get_component(ComponentType.POSITION).position,
@@ -47,12 +52,12 @@ class PhysicsSystem(GameSystem):
                     height=other_entity.get_component(ComponentType.BOUNDING_BOX).height
                 )
 
-                collision_vector : Optional[Vector2] = moving_rectangle.check_collision(other_rectangle)
+                collision_vector: Optional[Vector2] = moving_rectangle.check_collision(other_rectangle)
                 if collision_vector is not None:
                     self.event_bus.emit(CollisionEvent(
                         entity1=moving_entity,
                         entity2=other_entity,
                         collision_vector=collision_vector
                     ))
-                    break
+
 

@@ -5,6 +5,7 @@ from game.entities_repo import EntitiesRepo
 
 from game.systems.render.render import RenderSystem
 from game.systems.render.textures_repo import TextureRepo
+from raynoid.factories.entities import build_ball
 from raynoid.factories.level import LevelFactory
 
 
@@ -29,6 +30,7 @@ def main():
 
     factory = LevelFactory(entities_repo)
     factory.load_harcoded_level()
+    entities_repo.add_entity(factory=build_ball(400,300,0.1))
   
     render_system = RenderSystem(entities_repo, texture_repo)
     while not rl.window_should_close():
