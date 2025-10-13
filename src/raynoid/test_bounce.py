@@ -39,9 +39,9 @@ def main():
     animation_system = AnimationSystem(entities_repo)
     render_system = RenderSystem(entities_repo, texture_repo)
     logic_system = LogicSystem(entities_repo)
+    collision_response_system = CollisionResponseSystem(entities_repo)
     event_bus = EventBus()
-    collision_response_system = CollisionResponseSystem(entities_repo, event_bus)
-    event_bus.subscribe(CollisionEvent, collision_response_system._handle_collision_response)
+    event_bus.subscribe(CollisionEvent, collision_response_system.handle_collision_response)
     physics_system = PhysicsSystem(entities_repo, event_bus)
     
     while not rl.window_should_close():

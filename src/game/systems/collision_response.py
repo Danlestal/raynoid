@@ -2,18 +2,13 @@ from pyray import Vector2
 from game.components import CollisionResponse, CollisionResponseType, ComponentType
 from game.entity import Entity
 from game.systems.physics.new_physics_system import CollisionEvent
-from game.systems.system import GameSystem
 
 
-class CollisionResponseSystem(GameSystem):
-    def __init__(self, entities_db, physics_system):
+class CollisionResponseSystem:
+    def __init__(self, entities_db):
         self.entities_db = entities_db
-        self.physics_system = physics_system
 
-    def update(self):
-        pass
-
-    def _handle_collision_response(self, collision_event: CollisionEvent):
+    def handle_collision_response(self, collision_event: CollisionEvent):
         entity1 = collision_event.entity1
         entity2 = collision_event.entity2
 
